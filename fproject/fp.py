@@ -1,4 +1,3 @@
-import pygame
 from pygame.sprite import *
 from pygame import*
 from pygame.locals import *
@@ -46,7 +45,6 @@ def main():
         render_text("Turn   :", BLACK, 870, 500, 30)
         render_text("P"+str(p_turn), BLACK, 970, 500, 30)
 
-
     def select_button():
         '''
         This function will draw a box to store the number 1-4 which indicates
@@ -63,9 +61,7 @@ def main():
         render_text("3", BLACK, 950, 600, 50)
         render_text("4", BLACK, 1000, 600, 50)
 
-
     def board():
-
         pygame.draw.line(screen, WHITE, (750, 0), (750, 750), BoardBorder)
 
         pygame.draw.rect(screen, GREEN, (0, 0, main_box_width, main_box_height))
@@ -207,7 +203,6 @@ def main():
             self.center_y = 0
             pygame.draw.circle(screen, DARKGREEN, (self.center_x, self.center_y), self.radius)
 
-
     class Player(Ludobutton):
         def __init__(self, color, track):
             super().__init__()
@@ -222,7 +217,7 @@ def main():
         def placeludobutton(self, position, initiated):
             for x in range(4):
                 if initiated[x] == position[x]:
-                    kkk = 32
+                    kkk = 32  # doesnt have any effect, only indicator so that else can be used
 
                 else:
                     pygame.draw.circle(screen, self.color, position[x-1], 18)
@@ -249,16 +244,13 @@ def main():
                     pygame.draw.circle(screen, self.color, self.track[self.currentposition[x]], 20)
                     self.drawbutton(self.color, self.track[self.currentposition[x]], self.track[self.currentposition[x]])
 
-
-
-
-
     # Home button positions
     position_green = [[100, 100], [200, 100], [100, 200], [200, 200]]
     position_blue = [[100, 550], [100, 650], [200, 550], [200, 650]]
     position_red = [[550, 100], [650, 100], [550, 200], [650, 200]]
     position_yellow = [[550, 550], [550, 650], [650, 550], [650, 650]]
 
+    # Status of the buttons
     initiated1 = [[0, 0], [0, 0], [0, 0], [0, 0]]
     initiated2 = [[0, 0], [0, 0], [0, 0], [0, 0]]
     initiated3 = [[0, 0], [0, 0], [0, 0], [0, 0]]
@@ -320,10 +312,8 @@ def main():
     mouse_x = 0             # co-ordinate x of the mouse
     mouse_y = 0             # co-ordinate y of the mouse
     mouse_clicked = False
-    move_button = 0         # which button out of (1,2,3,4) is to be moved
     p_turn = 1              # variable to hold the turn of the player
     n = 0                   # variable tells about number that turned up while rolling the dice
-
 
     while True:
         screen.fill(BLACK)  # Fill the background screen with black
@@ -331,19 +321,19 @@ def main():
         (pressed1, pressed2, pressed3) = pygame.mouse.get_pressed()
 
         if pressed1 and dice.rect.collidepoint(pos) == 1 and mouse_clicked == True:
-            n = random.randint(1, 7)
+            n = random.randint(1, 7)   # randomize dice number between 1-6
             if n == 1:
-                dice.one()
+                dice.one()  # if number = 1, call the one method of class dice
             elif n == 2:
-                dice.two()
+                dice.two()  # if number = 2, call the two method of class dice
             elif n == 3:
-                dice.three()
+                dice.three()  # if number = 3, call the three method of class dice
             elif n == 4:
-                dice.four()
+                dice.four()  # if number = 4, call the four method of class dice
             elif n == 5:
-                dice.five()
+                dice.five()  # if number = 5, call the five method of class dice
             elif n == 6:
-                dice.six()
+                dice.six()  # if number = 6, call the six method of class dice
             mouse_clicked = False
 
         board()             # Call the board
@@ -458,14 +448,14 @@ def main():
 
                     if Player1.initialstatus[1] == 0:
                             if n == 6:
-                                Player1.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                Player1.initialstatus[1] = 1    # change the status of button 2 for player 1
                                 initiated1[2] = position_green[2]    # set the button which has been initiated
                                 Player1.initiatestart(2)        # Function call to initiate the start of button 2
                                 mouse_clicked = False            # Change the status of the event
                                 Player1.currentposition[1] = 0
 
                             else:
-                                p_turn = 2                        # change the player-id if number is not 6
+                                p_turn = 2                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -526,14 +516,14 @@ def main():
 
                     if Player1.initialstatus[2] == 0:
                             if n == 6:
-                                Player1.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                Player1.initialstatus[2] = 1    # change the status of button 3 for player 1
                                 initiated1[3] = position_green[3]    # set the button which has been initiated
                                 Player1.initiatestart(3)        # Function call to initiate the start of button1
                                 mouse_clicked = False            # Change the status of the event
                                 Player1.currentposition[2] = 0
 
                             else:
-                                p_turn = 2                        # change the player-id if number is not 6
+                                p_turn = 2                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -593,14 +583,14 @@ def main():
 
                     if Player1.initialstatus[3] == 0:
                             if n == 6:
-                                Player1.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                Player1.initialstatus[3] = 1    # change the status of button 4 for player 1
                                 initiated1[0] = position_green[0]    # set the button which has been initiated
                                 Player1.initiatestart(4)        # Function call to initiate the start of button1
                                 mouse_clicked = False            # Change the status of the event
                                 Player1.currentposition[3] = 0
 
                             else:
-                                p_turn = 2                        # change the player-id if number is not 6
+                                p_turn = 2                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -667,14 +657,14 @@ def main():
                         if Player2.initialstatus[0] == 0:
 
                                 if n == 6:
-                                    Player2.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                    Player2.initialstatus[0] = 1    # change the status of button 1 for player 2
                                     initiated2[1] = position_red[1]    # set the button which has been initiated
                                     Player2.initiatestart(1)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player2.currentposition[0] = 0
 
                                 else:
-                                    p_turn = 3                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -732,18 +722,19 @@ def main():
 
                     if move_button == 2:
                         diff = (56 - Player2.currentposition[1])
+                        # diff is a variable that holds the distance between the current pos of button and the home
 
                         if Player2.initialstatus[1] == 0:
 
                                 if n == 6:
-                                    Player2.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                    Player2.initialstatus[1] = 1    # change the status of button 2 for player 2
                                     initiated2[2] = position_red[2]    # set the button which has been initiated
                                     Player2.initiatestart(2)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player2.currentposition[1] = 0
 
                                 else:
-                                    p_turn = 3                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -806,14 +797,14 @@ def main():
                         if Player2.initialstatus[2] == 0:
 
                                 if n == 6:
-                                    Player2.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                    Player2.initialstatus[2] = 1    # change the status of button 3 for player 2
                                     initiated2[3] = position_red[3]    # set the button which has been initiated
                                     Player2.initiatestart(3)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player2.currentposition[2] = 0
 
                                 else:
-                                    p_turn = 3                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -875,14 +866,14 @@ def main():
                         if Player2.initialstatus[3] == 0:
 
                                 if n == 6:
-                                    Player2.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                    Player2.initialstatus[3] = 1    # change the status of button 4 for player 2
                                     initiated2[0] = position_red[0]    # set the button which has been initiated
                                     Player2.initiatestart(4)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player2.currentposition[3] = 0
 
                                 else:
-                                    p_turn = 3                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -949,14 +940,14 @@ def main():
                         if Player3.initialstatus[0] == 0:
 
                                 if n == 6:
-                                    Player3.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                    Player3.initialstatus[0] = 1    # change the status of button 1 for player 3
                                     initiated3[1] = position_blue[1]    # set the button which has been initiated
                                     Player3.initiatestart(1)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player3.currentposition[0] = 0
 
                                 else:
-                                    p_turn = 4                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -1018,14 +1009,14 @@ def main():
                         if Player3.initialstatus[1] == 0:
 
                                 if n == 6:
-                                    Player3.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                    Player3.initialstatus[1] = 1    # change the status of button 2 for player 3
                                     initiated3[2] = position_blue[2]    # set the button which has been initiated
                                     Player3.initiatestart(2)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player3.currentposition[1] = 0
 
                                 else:
-                                    p_turn = 4                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -1087,14 +1078,14 @@ def main():
                         if Player3.initialstatus[2] == 0:
 
                                 if n == 6:
-                                    Player3.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                    Player3.initialstatus[2] = 1    # change the status of button 3 for player 3
                                     initiated3[3] = position_blue[3]    # set the button which has been initiated
                                     Player3.initiatestart(3)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player3.currentposition[2] = 0
 
                                 else:
-                                    p_turn = 4                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -1156,14 +1147,14 @@ def main():
                         if Player3.initialstatus[3] == 0:
 
                                 if n == 6:
-                                    Player3.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                    Player3.initialstatus[3] = 1    # change the status of button 4 for player 3
                                     initiated3[0] = position_blue[0]    # set the button which has been initiated
                                     Player3.initiatestart(4)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
                                     Player3.currentposition[3] = 0
 
                                 else:
-                                    p_turn = 4                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the p_turn if number is not 6
                                     mouse_clicked = False
 
                         else:
@@ -1230,14 +1221,14 @@ def main():
                     if Player4.initialstatus[0] == 0:
 
                             if n == 6:
-                                Player4.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                Player4.initialstatus[0] = 1    # change the status of button 1 for player 4
                                 initiated4[1] = position_yellow[1]    # set the button which has been initiated
                                 Player4.initiatestart(1)        # Function call to initiate the start of button1
                                 mouse_clicked = False            # Change the status of the event
                                 Player4.currentposition[0] = 0
 
                             else:
-                                p_turn = 1                        # change the player-id if number is not 6
+                                p_turn = 1                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -1299,14 +1290,14 @@ def main():
                     if Player4.initialstatus[1] == 0:
 
                             if n == 6:
-                                Player4.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                Player4.initialstatus[1] = 1    # change the status of button 2 for player 4
                                 initiated4[2] = position_yellow[2]    # set the button which has been initiated
                                 Player4.initiatestart(2)        # Function call to initiate the start of button1
                                 mouse_clicked = False            # Change the status of the event
                                 Player4.currentposition[1] = 0
 
                             else:
-                                p_turn = 1                        # change the player-id if number is not 6
+                                p_turn = 1                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -1368,14 +1359,14 @@ def main():
                     if Player4.initialstatus[2] == 0:
 
                             if n == 6:
-                                Player4.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                Player4.initialstatus[2] = 1    # change the status of button 3 for player 4
                                 initiated4[3] = position_yellow[3]    # set the button which has been initiated
                                 Player4.initiatestart(3)        # Function call to initiate the start of button1
                                 mouse_clicked = False            # Change the status of the event
                                 Player4.currentposition[2] = 0
 
                             else:
-                                p_turn = 1                        # change the player-id if number is not 6
+                                p_turn = 1                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
@@ -1436,14 +1427,14 @@ def main():
 
                     if Player4.initialstatus[3] == 0:
                             if n == 6:
-                                Player4.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                Player4.initialstatus[3] = 1    # change the status of button 4 for player 4
                                 initiated4[0] = position_yellow[0]    # set the button which has been initiated
-                                Player4.initiatestart(4)        # Function call to initiate the start of button1
+                                Player4.initiatestart(4)        # Function call to initiate the start of button4
                                 mouse_clicked = False            # Change the status of the event
                                 Player4.currentposition[3] = 0
 
                             else:
-                                p_turn = 1                        # change the player-id if number is not 6
+                                p_turn = 1                        # change the p_turn if number is not 6
                                 mouse_clicked = False
 
                     else:
