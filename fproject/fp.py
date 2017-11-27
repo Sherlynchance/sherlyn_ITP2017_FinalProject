@@ -138,7 +138,6 @@ def main():
         pygame.draw.polygon(screen, BLUE, ((300, 450), (450, 450), (375, 375)))
         pygame.draw.polygon(screen, YELLOW, ((450, 300), (450, 450), (375, 375)))
 
-
     def score_board():
         pygame.draw.rect(screen, WHITE, (890, 350, 200, 100))
         pygame.draw.line(screen, BLACK, (990, 350), (990, 450))
@@ -149,15 +148,10 @@ def main():
         render_text("P3: " + str(Player3.score), BLACK, 925, 415, 20)
         render_text("P4: " + str(Player4.score), BLACK, 1025, 415, 20)
 
-
-
     def render_text(string_text, color, x, y, fontsize):
         text = pygame.font.SysFont("Arial", fontsize)
         textsurface = text.render(string_text, True, color)
         screen.blit(textsurface, (x, y))
-
-
-
 
     class Dice(Sprite):
         def __init__(self):
@@ -201,7 +195,6 @@ def main():
             self.image = pygame.image.load("six.png")
             self.image = pygame.transform.scale(self.image, (100,100))
             self.rect = self.image.get_rect(topright=(875, 350))
-
 
     class Ludobutton(Sprite):
         radius = 20
@@ -351,6 +344,7 @@ def main():
                 dice.five()
             elif n == 6:
                 dice.six()
+            mouse_clicked = False
 
         board()             # Call the board
         playerturn(p_turn)  # Call the playerturn box
@@ -380,79 +374,356 @@ def main():
                 (mouse_x, mouse_y) = event.pos
                 mouse_clicked = True
 
-            if p_turn == 1:
+        if p_turn == 1:
 
-                if Player1.finalstatus[0] == 1 and Player1.finalstatus[1] == 1 and Player1.finalstatus[2] == 1 and Player1.finalstatus[3] == 1:
-                    p_turn = 2
+            if Player1.finalstatus[0] == 1 and Player1.finalstatus[1] == 1 and Player1.finalstatus[2] == 1 and Player1.finalstatus[3] == 1:
+                p_turn = 2
 
-                elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
-                    move_button = 1  # condition for the mouse cursor to be over the button, then if clicked, button 1 will move or get initiated
-                    mouse_clicked = False
+            elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 1  # condition for the mouse cursor to be over the button, then if clicked, button 1 will move or get initiated
+                mouse_clicked = False
 
-                    if move_button == 1:
-                        diff = (56 - Player1.currentposition[0])
+                if move_button == 1:
+                    diff = (56 - Player1.currentposition[0])
 
-                        if Player1.initialstatus[0] == 0:
-                            if n == 6:
-                                Player1.initialstatus[0] = 1         # change the status of button 1 for player 1
-                                initiated1[1] = position_green[1]    # set the button which has been initiated
-                                Player1.initiatestart(1)             # Function call to initiate the start of button1
-                                mouse_clicked = False                # Change the status of the event
-                                Player1.currentposition[0] = 0
-                                p_turn = 1
+                    if Player1.initialstatus[0] == 0:
+                        if n == 6:
+                            Player1.initialstatus[0] = 1         # change the status of button 1 for player 1
+                            initiated1[1] = position_green[1]    # set the button which has been initiated
+                            Player1.initiatestart(1)             # Function call to initiate the start of button1
+                            mouse_clicked = False                # Change the status of the event
+                            Player1.currentposition[0] = 0
+                            p_turn = 1
+
+                        else:
+                            p_turn = 2
+                            mouse_clicked = False
+
+                    else:
+
+                        if Player1.finalstatus[0] != 1 and Player1.currentposition[0] != 56:
+
+                            if Player1.currentposition[0] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 6
+                                p_turn = 2
+
+                            elif Player1.currentposition[0] < 50:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[0])
+                                    Player1.currentposition[0] += 6
+                                p_turn = 2
 
                             else:
                                 p_turn = 2
                                 mouse_clicked = False
 
-                        else:
+            elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 2
+                mouse_clicked = False
 
-                            if Player1.finalstatus[0] != 1 and Player1.currentposition[0] != 56:
+                if move_button == 2:
+                    diff = (56 - Player1.currentposition[1])
 
-                                if Player1.currentposition[0] >= 50 and n <= diff:
-                                    if n == 1:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 1
-                                    elif n == 2:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 2
-                                    elif n == 3:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 3
-                                    elif n == 4:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 4
-                                    elif n == 5:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 5
-                                    elif n == 6:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 6
-                                        p_turn = 2
+                    if Player1.initialstatus[1] == 0:
+                            if n == 6:
+                                Player1.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                initiated1[2] = position_green[2]    # set the button which has been initiated
+                                Player1.initiatestart(2)        # Function call to initiate the start of button 2
+                                mouse_clicked = False            # Change the status of the event
+                                Player1.currentposition[1] = 0
 
-                                elif Player1.currentposition[0] < 50:
-                                    if n == 1:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 1
-                                    elif n == 2:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 2
-                                    elif n == 3:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 3
-                                    elif n == 4:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 4
-                                    elif n == 5:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 5
-                                    elif n == 6:
-                                        Player1.move(Player1.currentposition[0])
-                                        Player1.currentposition[0] += 6
-                                        p_turn = 2
+                            else:
+                                p_turn = 2                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player1.finalstatus[1] != 1:
+
+                            if Player1.currentposition[1] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 6
+                                p_turn = 2
+
+                            elif Player1.currentposition[1] < 50:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[1])
+                                    Player1.currentposition[1] += 6
+                                p_turn = 2
+
+                            else:
+                                p_turn = 2
+                                mouse_clicked = False
+
+            elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 3
+                mouse_clicked = False
+
+                if move_button == 3:
+                    diff = (56 - Player1.currentposition[2])
+
+                    if Player1.initialstatus[2] == 0:
+                            if n == 6:
+                                Player1.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                initiated1[3] = position_green[3]    # set the button which has been initiated
+                                Player1.initiatestart(3)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player1.currentposition[2] = 0
+
+                            else:
+                                p_turn = 2                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player1.finalstatus[2] != 1:
+                            if Player1.currentposition[2] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 6
+                                p_turn = 2
+
+                            elif Player1.currentposition[2] < 50:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[2])
+                                    Player1.currentposition[2] += 6
+                                p_turn = 2
+
+                            else:
+                                p_turn = 2
+                                mouse_clicked = False
+
+            elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 4
+                mouse_clicked = False
+
+                if move_button == 4:
+                    diff = (56 - Player1.currentposition[3])
+
+                    if Player1.initialstatus[3] == 0:
+                            if n == 6:
+                                Player1.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                initiated1[0] = position_green[0]    # set the button which has been initiated
+                                Player1.initiatestart(4)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player1.currentposition[3] = 0
+
+                            else:
+                                p_turn = 2                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player1.finalstatus[3] != 1:
+
+                            if Player1.currentposition[3] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 6
+                                p_turn = 2
+
+                            elif Player1.currentposition[3] < 50:
+                                if n == 1:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 1
+                                elif n == 2:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 2
+                                elif n == 3:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 3
+                                elif n == 4:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 4
+                                elif n == 5:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 5
+                                elif n == 6:
+                                    Player1.move(Player1.currentposition[3])
+                                    Player1.currentposition[3] += 6
+                                p_turn = 2
+
+                            else:
+                                p_turn = 2
+                                mouse_clicked = False
+
+        if p_turn == 2:
+
+                if Player2.finalstatus[0] == 1 and Player2.finalstatus[1] == 1 and Player2.finalstatus[2] == 1 and Player2.finalstatus[3] == 1:
+                    p_turn = 3
+
+                elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
+                    move_button = 1
+                    mouse_clicked = False
+
+                    if move_button == 1:
+                        diff = (56 - Player2.currentposition[0])
+
+                        if Player2.initialstatus[0] == 0:
+
+                                if n == 6:
+                                    Player2.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                    initiated2[1] = position_red[1]    # set the button which has been initiated
+                                    Player2.initiatestart(1)        # Function call to initiate the start of button1
+                                    mouse_clicked = False            # Change the status of the event
+                                    Player2.currentposition[0] = 0
 
                                 else:
-                                    p_turn = 2
+                                    p_turn = 3                        # change the player-id if number is not 6
+                                    mouse_clicked = False
+
+                        else:
+                            if Player2.finalstatus[0] != 1:
+
+                                if Player2.currentposition[0] >= 50 and n <= diff:
+                                    if n == 1:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 1
+                                    elif n == 2:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 2
+                                    elif n == 3:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 3
+                                    elif n == 4:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 4
+                                    elif n == 5:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 5
+                                    elif n == 6:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 6
+                                    p_turn = 3
+
+                                elif Player2.currentposition[0] < 50:
+                                    if n == 1:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 1
+                                    elif n == 2:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 2
+                                    elif n == 3:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 3
+                                    elif n == 4:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 4
+                                    elif n == 5:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 5
+                                    elif n == 6:
+                                        Player2.move(Player2.currentposition[0])
+                                        Player2.currentposition[0] += 6
+                                    p_turn = 3
+
+                                else:
+                                    p_turn = 3
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
@@ -460,65 +731,69 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 2:
-                        diff = (56 - Player1.currentposition[1])
+                        diff = (56 - Player2.currentposition[1])
 
-                        if Player1.initialstatus[1] == 0:
+                        if Player2.initialstatus[1] == 0:
+
                                 if n == 6:
-                                    Player1.initialstatus[1] = 1    # change the status of button 1 for player 1
-                                    initiated1[2] = position_green[2]    # set the button which has been initiated
-                                    Player1.initiatestart(2)        # Function call to initiate the start of button1
+                                    Player2.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                    initiated2[2] = position_red[2]    # set the button which has been initiated
+                                    Player2.initiatestart(2)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player1.currentposition[1] = 0
+                                    Player2.currentposition[1] = 0
 
                                 else:
-                                    p_turn = 2                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player1.finalstatus[1] != 1:
+                            if Player2.finalstatus[1] != 1:
 
-                                if Player1.currentposition[1] >= 50 and n <= diff:
+                                if Player2.currentposition[1] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 1
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 1
                                     elif n == 2:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 2
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 2
                                     elif n == 3:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 3
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 3
                                     elif n == 4:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 4
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 4
                                     elif n == 5:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 5
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 5
                                     elif n == 6:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 6
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 6
+                                    p_turn = 3
 
-                                elif Player1.currentposition[1] < 50:
+                                elif Player2.currentposition[1] < 50:
                                     if n == 1:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 1
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 1
                                     elif n == 2:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 2
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 2
                                     elif n == 3:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 3
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 3
                                     elif n == 4:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 4
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 4
                                     elif n == 5:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 5
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 5
                                     elif n == 6:
-                                        Player1.move(Player1.currentposition[1])
-                                        Player1.currentposition[1] += 6
+                                        Player2.move(Player2.currentposition[1])
+                                        Player2.currentposition[1] += 6
+                                    p_turn = 3
+
 
                                 else:
-                                    p_turn = 2
+                                    p_turn = 3
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
@@ -526,64 +801,68 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 3:
-                        diff = (56 - Player1.currentposition[2])
+                        diff = (56 - Player2.currentposition[2])
 
-                        if Player1.initialstatus[2] == 0:
+                        if Player2.initialstatus[2] == 0:
+
                                 if n == 6:
-                                    Player1.initialstatus[2] = 1    # change the status of button 1 for player 1
-                                    initiated1[3] = position_green[3]    # set the button which has been initiated
-                                    Player1.initiatestart(3)        # Function call to initiate the start of button1
+                                    Player2.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                    initiated2[3] = position_red[3]    # set the button which has been initiated
+                                    Player2.initiatestart(3)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player1.currentposition[2] = 0
+                                    Player2.currentposition[2] = 0
 
                                 else:
-                                    p_turn = 2                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player1.finalstatus[2] != 1:
-                                if Player1.currentposition[2] >= 50 and n <= diff:
-                                    if n == 1:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 1
-                                    elif n == 2:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 2
-                                    elif n == 3:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 3
-                                    elif n == 4:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 4
-                                    elif n == 5:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 5
-                                    elif n == 6:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 6
+                            if Player2.finalstatus[2] != 1:
 
-                                elif Player1.currentposition[2] < 50:
+                                if Player2.currentposition[2] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 1
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 1
                                     elif n == 2:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 2
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 2
                                     elif n == 3:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 3
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 3
                                     elif n == 4:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 4
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 4
                                     elif n == 5:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 5
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 5
                                     elif n == 6:
-                                        Player1.move(Player1.currentposition[2])
-                                        Player1.currentposition[2] += 6
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 6
+                                    p_turn = 3
+
+                                elif Player2.currentposition[2] < 50:
+                                    if n == 1:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 1
+                                    elif n == 2:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 2
+                                    elif n == 3:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 3
+                                    elif n == 4:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 4
+                                    elif n == 5:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 5
+                                    elif n == 6:
+                                        Player2.move(Player2.currentposition[2])
+                                        Player2.currentposition[2] += 6
+                                    p_turn = 3
 
                                 else:
-                                    p_turn = 2
+                                    p_turn = 3
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
@@ -591,616 +870,73 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 4:
-                        diff = (56 - Player1.currentposition[3])
+                        diff = (56 - Player2.currentposition[3])
 
-                        if Player1.initialstatus[3] == 0:
+                        if Player2.initialstatus[3] == 0:
+
                                 if n == 6:
-                                    Player1.initialstatus[3] = 1    # change the status of button 1 for player 1
-                                    initiated1[0] = position_green[0]    # set the button which has been initiated
-                                    Player1.initiatestart(4)        # Function call to initiate the start of button1
+                                    Player2.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                    initiated2[0] = position_red[0]    # set the button which has been initiated
+                                    Player2.initiatestart(4)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player1.currentposition[3] = 0
+                                    Player2.currentposition[3] = 0
 
                                 else:
-                                    p_turn = 2                        # change the player-id if number is not 6
+                                    p_turn = 3                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player1.finalstatus[3] != 1:
+                            if Player2.finalstatus[3] != 1:
 
-                                if Player1.currentposition[3] >= 50 and n <= diff:
+                                if Player2.currentposition[3] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 1
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 1
                                     elif n == 2:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 2
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 2
                                     elif n == 3:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 3
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 3
                                     elif n == 4:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 4
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 4
                                     elif n == 5:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 5
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 5
                                     elif n == 6:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 6
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 6
+                                    p_turn = 3
 
-                                elif Player1.currentposition[3] < 50:
+                                elif Player2.currentposition[3] < 50:
                                     if n == 1:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 1
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 1
                                     elif n == 2:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 2
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 2
                                     elif n == 3:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 3
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 3
                                     elif n == 4:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 4
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 4
                                     elif n == 5:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 5
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 5
                                     elif n == 6:
-                                        Player1.move(Player1.currentposition[3])
-                                        Player1.currentposition[3] += 6
+                                        Player2.move(Player2.currentposition[3])
+                                        Player2.currentposition[3] += 6
+                                    p_turn = 3
 
                                 else:
-                                    p_turn = 2
+                                    p_turn = 3
                                     mouse_clicked = False
 
-            if p_turn == 2:
+        if p_turn == 3:
 
-                    if Player2.finalstatus[0] == 1 and Player2.finalstatus[1] == 1 and Player2.finalstatus[2] == 1 and Player2.finalstatus[3] == 1:
-                        p_turn = 3
-
-                    elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 1
-                        mouse_clicked = False
-
-                        if move_button == 1:
-                            diff = (56 - Player2.currentposition[0])
-
-                            if Player2.initialstatus[0] == 0:
-
-                                    if n == 6:
-                                        Player2.initialstatus[0] = 1    # change the status of button 1 for player 1
-                                        initiated2[1] = position_red[1]    # set the button which has been initiated
-                                        Player2.initiatestart(1)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player2.currentposition[0] = 0
-
-                                    else:
-                                        p_turn = 3                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player2.finalstatus[0] != 1:
-
-                                    if Player2.currentposition[0] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 6
-
-                                    elif Player2.currentposition[0] < 50:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[0])
-                                            Player2.currentposition[0] += 6
-
-                                    else:
-                                        p_turn = 3
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 2
-                        mouse_clicked = False
-
-                        if move_button == 2:
-                            diff = (56 - Player2.currentposition[1])
-
-                            if Player2.initialstatus[1] == 0:
-
-                                    if n == 6:
-                                        Player2.initialstatus[1] = 1    # change the status of button 1 for player 1
-                                        initiated2[2] = position_red[2]    # set the button which has been initiated
-                                        Player2.initiatestart(2)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player2.currentposition[1] = 0
-
-                                    else:
-                                        p_turn = 3                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player2.finalstatus[1] != 1:
-
-                                    if Player2.currentposition[1] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 6
-
-                                    elif Player2.currentposition[1] < 50:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[1])
-                                            Player2.currentposition[1] += 6
-
-
-                                    else:
-                                        p_turn = 3
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 3
-                        mouse_clicked = False
-
-                        if move_button == 3:
-                            diff = (56 - Player2.currentposition[2])
-
-                            if Player2.initialstatus[2] == 0:
-
-                                    if n == 6:
-                                        Player2.initialstatus[2] = 1    # change the status of button 1 for player 1
-                                        initiated2[3] = position_red[3]    # set the button which has been initiated
-                                        Player2.initiatestart(3)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player2.currentposition[2] = 0
-
-                                    else:
-                                        p_turn = 3                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player2.finalstatus[2] != 1:
-
-                                    if Player2.currentposition[2] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 6
-
-                                    elif Player2.currentposition[2] < 50:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[2])
-                                            Player2.currentposition[2] += 6
-
-                                    else:
-                                        p_turn = 3
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 4
-                        mouse_clicked = False
-
-                        if move_button == 4:
-                            diff = (56 - Player2.currentposition[3])
-
-                            if Player2.initialstatus[3] == 0:
-
-                                    if n == 6:
-                                        Player2.initialstatus[3] = 1    # change the status of button 1 for player 1
-                                        initiated2[0] = position_red[0]    # set the button which has been initiated
-                                        Player2.initiatestart(4)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player2.currentposition[3] = 0
-
-                                    else:
-                                        p_turn = 3                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player2.finalstatus[3] != 1:
-
-                                    if Player2.currentposition[3] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 6
-
-                                    elif Player2.currentposition[3] < 50:
-                                        if n == 1:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 1
-                                        elif n == 2:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 2
-                                        elif n == 3:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 3
-                                        elif n == 4:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 4
-                                        elif n == 5:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 5
-                                        elif n == 6:
-                                            Player2.move(Player2.currentposition[3])
-                                            Player2.currentposition[3] += 6
-
-                                    else:
-                                        p_turn = 3
-                                        mouse_clicked = False
-
-            if p_turn == 3:
-
-                    if Player3.finalstatus[0] == 1 and Player3.finalstatus[1] == 1 and Player3.finalstatus[2] == 1 and Player3.finalstatus[3] == 1:
-                        p_turn = 4
-
-                    elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 1
-                        mouse_clicked = False
-
-                        if move_button == 1:
-                            diff = (56 - Player3.currentposition[0])
-
-                            if Player3.initialstatus[0] == 0:
-
-                                    if n == 6:
-                                        Player3.initialstatus[0] = 1    # change the status of button 1 for player 1
-                                        initiated3[1] = position_blue[1]    # set the button which has been initiated
-                                        Player3.initiatestart(1)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player3.currentposition[0] = 0
-
-                                    else:
-                                        p_turn = 4                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player3.finalstatus[0] != 1:
-
-                                    if Player3.currentposition[0] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 6
-                                    elif Player3.currentposition[0] < 50:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[0])
-                                            Player3.currentposition[0] += 6
-
-                                    else:
-                                        p_turn = 4
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 2
-                        mouse_clicked = False
-
-                        if move_button == 2:
-                            diff = (56 - Player3.currentposition[1])
-
-                            if Player3.initialstatus[1] == 0:
-
-                                    if n == 6:
-                                        Player3.initialstatus[1] = 1    # change the status of button 1 for player 1
-                                        initiated3[2] = position_blue[2]    # set the button which has been initiated
-                                        Player3.initiatestart(2)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player3.currentposition[1] = 0
-
-                                    else:
-                                        p_turn = 4                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player3.finalstatus[1] != 1:
-
-                                    if Player3.currentposition[1] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 6
-
-                                    elif Player3.currentposition[1] < 50:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[1])
-                                            Player3.currentposition[1] += 6
-
-                                    else:
-                                        p_turn = 4
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 3
-                        mouse_clicked = False
-
-                        if move_button == 3:
-                            diff = (56 - Player3.currentposition[2])
-
-                            if Player3.initialstatus[2] == 0:
-
-                                    if n == 6:
-                                        Player3.initialstatus[2] = 1    # change the status of button 1 for player 1
-                                        initiated3[3] = position_blue[3]    # set the button which has been initiated
-                                        Player3.initiatestart(3)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player3.currentposition[2] = 0
-
-                                    else:
-                                        p_turn = 4                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player3.finalstatus[2] != 1:
-
-                                    if Player3.currentposition[2] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 6
-
-                                    elif Player3.currentposition[2] < 50:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[2])
-                                            Player3.currentposition[2] += 6
-
-                                    else:
-                                        p_turn = 4
-                                        mouse_clicked = False
-
-                    elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
-                        move_button = 4
-                        mouse_clicked = False
-
-                        if move_button == 4:
-                            diff = (56 - Player3.currentposition[3])
-
-                            if Player3.initialstatus[3] == 0:
-
-                                    if n == 6:
-                                        Player3.initialstatus[3] = 1    # change the status of button 1 for player 1
-                                        initiated3[0] = position_blue[0]    # set the button which has been initiated
-                                        Player3.initiatestart(4)        # Function call to initiate the start of button1
-                                        mouse_clicked = False            # Change the status of the event
-                                        Player3.currentposition[3] = 0
-
-                                    else:
-                                        p_turn = 4                        # change the player-id if number is not 6
-                                        mouse_clicked = False
-
-                            else:
-                                if Player3.finalstatus[3] != 1:
-
-                                    if Player3.currentposition[3] >= 50 and n <= diff:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 6
-
-                                    elif Player3.currentposition[3] < 50:
-                                        if n == 1:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 1
-                                        elif n == 2:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 2
-                                        elif n == 3:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 3
-                                        elif n == 4:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 4
-                                        elif n == 5:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 5
-                                        elif n == 6:
-                                            Player3.move(Player3.currentposition[3])
-                                            Player3.currentposition[3] += 6
-
-                                    else:
-                                        p_turn = 4
-                                        mouse_clicked = False
-
-            if p_turn == 4:
-
-                if Player4.finalstatus[0] == 1 and Player4.finalstatus[1] == 1 and Player4.finalstatus[2] == 1 and Player4.finalstatus[3] == 1:
+                if Player3.finalstatus[0] == 1 and Player3.finalstatus[1] == 1 and Player3.finalstatus[2] == 1 and Player3.finalstatus[3] == 1:
                     p_turn = 4
 
                 elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
@@ -1208,66 +944,68 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 1:
-                        diff = (56 - Player4.currentposition[0])
+                        diff = (56 - Player3.currentposition[0])
 
-                        if Player4.initialstatus[0] == 0:
+                        if Player3.initialstatus[0] == 0:
 
                                 if n == 6:
-                                    Player4.initialstatus[0] = 1    # change the status of button 1 for player 1
-                                    initiated4[1] = position_yellow[1]    # set the button which has been initiated
-                                    Player4.initiatestart(1)        # Function call to initiate the start of button1
+                                    Player3.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                    initiated3[1] = position_blue[1]    # set the button which has been initiated
+                                    Player3.initiatestart(1)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player4.currentposition[0] = 0
+                                    Player3.currentposition[0] = 0
 
                                 else:
-                                    p_turn = 1                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player4.finalstatus[0] != 1:
+                            if Player3.finalstatus[0] != 1:
 
-                                if Player4.currentposition[0] >= 50 and n <= diff:
+                                if Player3.currentposition[0] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 1
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 2
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 3
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 4
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 5
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 6
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 6
+                                    p_turn = 4
 
-                                elif Player4.currentposition[0] < 50:
+                                elif Player3.currentposition[0] < 50:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 1
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 2
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 3
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 4
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 5
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[0])
-                                        Player4.currentposition[0] += 6
+                                        Player3.move(Player3.currentposition[0])
+                                        Player3.currentposition[0] += 6
+                                    p_turn = 4
 
                                 else:
-                                    p_turn = 1
+                                    p_turn = 4
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
@@ -1275,66 +1013,68 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 2:
-                        diff = (56 - Player4.currentposition[1])
+                        diff = (56 - Player3.currentposition[1])
 
-                        if Player4.initialstatus[1] == 0:
+                        if Player3.initialstatus[1] == 0:
 
                                 if n == 6:
-                                    Player4.initialstatus[1] = 1    # change the status of button 1 for player 1
-                                    initiated4[2] = position_yellow[2]    # set the button which has been initiated
-                                    Player4.initiatestart(2)        # Function call to initiate the start of button1
+                                    Player3.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                    initiated3[2] = position_blue[2]    # set the button which has been initiated
+                                    Player3.initiatestart(2)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player4.currentposition[1] = 0
+                                    Player3.currentposition[1] = 0
 
                                 else:
-                                    p_turn = 1                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player4.finalstatus[1] != 1:
+                            if Player3.finalstatus[1] != 1:
 
-                                if Player4.currentposition[1] >= 50 and n <= diff:
+                                if Player3.currentposition[1] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 1
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 2
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 3
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 4
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 5
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 6
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 6
+                                    p_turn = 4
 
-                                elif Player4.currentposition[1] < 50:
+                                elif Player3.currentposition[1] < 50:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 1
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 2
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 3
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 4
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 5
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[1])
-                                        Player4.currentposition[1] += 6
+                                        Player3.move(Player3.currentposition[1])
+                                        Player3.currentposition[1] += 6
+                                    p_turn = 4
 
                                 else:
-                                    p_turn = 1
+                                    p_turn = 4
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
@@ -1342,66 +1082,68 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 3:
-                        diff = (56 - Player4.currentposition[2])
+                        diff = (56 - Player3.currentposition[2])
 
-                        if Player4.initialstatus[2] == 0:
+                        if Player3.initialstatus[2] == 0:
 
                                 if n == 6:
-                                    Player4.initialstatus[2] = 1    # change the status of button 1 for player 1
-                                    initiated4[3] = position_yellow[3]    # set the button which has been initiated
-                                    Player4.initiatestart(3)        # Function call to initiate the start of button1
+                                    Player3.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                    initiated3[3] = position_blue[3]    # set the button which has been initiated
+                                    Player3.initiatestart(3)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player4.currentposition[2] = 0
+                                    Player3.currentposition[2] = 0
 
                                 else:
-                                    p_turn = 1                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player4.finalstatus[2] != 1:
+                            if Player3.finalstatus[2] != 1:
 
-                                if Player4.currentposition[2] >= 50 and n <= diff:
+                                if Player3.currentposition[2] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 1
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 2
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 3
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 4
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 5
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 6
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 6
+                                    p_turn = 4
 
-                                elif Player4.currentposition[2] < 50:
+                                elif Player3.currentposition[2] < 50:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 1
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 2
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 3
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 4
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 5
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[2])
-                                        Player4.currentposition[2] += 6
+                                        Player3.move(Player3.currentposition[2])
+                                        Player3.currentposition[2] += 6
+                                    p_turn = 4
 
                                 else:
-                                    p_turn = 1
+                                    p_turn = 4
                                     mouse_clicked = False
 
                 elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
@@ -1409,65 +1151,348 @@ def main():
                     mouse_clicked = False
 
                     if move_button == 4:
-                        diff = (56 - Player4.currentposition[3])
+                        diff = (56 - Player3.currentposition[3])
 
-                        if Player4.initialstatus[3] == 0:
+                        if Player3.initialstatus[3] == 0:
+
                                 if n == 6:
-                                    Player4.initialstatus[3] = 1    # change the status of button 1 for player 1
-                                    initiated4[0] = position_yellow[0]    # set the button which has been initiated
-                                    Player4.initiatestart(4)        # Function call to initiate the start of button1
+                                    Player3.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                    initiated3[0] = position_blue[0]    # set the button which has been initiated
+                                    Player3.initiatestart(4)        # Function call to initiate the start of button1
                                     mouse_clicked = False            # Change the status of the event
-                                    Player4.currentposition[3] = 0
+                                    Player3.currentposition[3] = 0
 
                                 else:
-                                    p_turn = 1                        # change the player-id if number is not 6
+                                    p_turn = 4                        # change the player-id if number is not 6
                                     mouse_clicked = False
 
                         else:
-                            if Player4.finalstatus[3] != 1:
+                            if Player3.finalstatus[3] != 1:
 
-                                if Player4.currentposition[3] >= 50 and n <= diff:
+                                if Player3.currentposition[3] >= 50 and n <= diff:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 1
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 2
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[3])
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 4
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 5
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 6
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 6
+                                    p_turn = 4
 
-                                elif Player4.currentposition[3] < 50:
+                                elif Player3.currentposition[3] < 50:
                                     if n == 1:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 1
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 1
                                     elif n == 2:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 2
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 2
                                     elif n == 3:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 3
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 3
                                     elif n == 4:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 4
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 4
                                     elif n == 5:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 5
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 5
                                     elif n == 6:
-                                        Player4.move(Player4.currentposition[3])
-                                        Player4.currentposition[3] += 6
+                                        Player3.move(Player3.currentposition[3])
+                                        Player3.currentposition[3] += 6
+                                    p_turn = 4
 
                                 else:
-                                    p_turn = 1
+                                    p_turn = 4
                                     mouse_clicked = False
+
+        if p_turn == 4:
+
+            if Player4.finalstatus[0] == 1 and Player4.finalstatus[1] == 1 and Player4.finalstatus[2] == 1 and Player4.finalstatus[3] == 1:
+                p_turn = 4
+
+            elif mouse_clicked == True and mouse_x >= 835 and mouse_x <= 885 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 1
+                mouse_clicked = False
+
+                if move_button == 1:
+                    diff = (56 - Player4.currentposition[0])
+
+                    if Player4.initialstatus[0] == 0:
+
+                            if n == 6:
+                                Player4.initialstatus[0] = 1    # change the status of button 1 for player 1
+                                initiated4[1] = position_yellow[1]    # set the button which has been initiated
+                                Player4.initiatestart(1)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player4.currentposition[0] = 0
+
+                            else:
+                                p_turn = 1                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player4.finalstatus[0] != 1:
+
+                            if Player4.currentposition[0] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 6
+                                p_turn = 1
+
+                            elif Player4.currentposition[0] < 50:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[0])
+                                    Player4.currentposition[0] += 6
+                                p_turn = 1
+
+                            else:
+                                p_turn = 1
+                                mouse_clicked = False
+
+            elif mouse_clicked == True and mouse_x >= 885 and mouse_x <= 935 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 2
+                mouse_clicked = False
+
+                if move_button == 2:
+                    diff = (56 - Player4.currentposition[1])
+
+                    if Player4.initialstatus[1] == 0:
+
+                            if n == 6:
+                                Player4.initialstatus[1] = 1    # change the status of button 1 for player 1
+                                initiated4[2] = position_yellow[2]    # set the button which has been initiated
+                                Player4.initiatestart(2)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player4.currentposition[1] = 0
+
+                            else:
+                                p_turn = 1                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player4.finalstatus[1] != 1:
+
+                            if Player4.currentposition[1] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 6
+                                p_turn = 1
+
+                            elif Player4.currentposition[1] < 50:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[1])
+                                    Player4.currentposition[1] += 6
+                                p_turn = 1
+
+                            else:
+                                p_turn = 1
+                                mouse_clicked = False
+
+            elif mouse_clicked == True and mouse_x >= 935 and mouse_x <= 985 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 3
+                mouse_clicked = False
+
+                if move_button == 3:
+                    diff = (56 - Player4.currentposition[2])
+
+                    if Player4.initialstatus[2] == 0:
+
+                            if n == 6:
+                                Player4.initialstatus[2] = 1    # change the status of button 1 for player 1
+                                initiated4[3] = position_yellow[3]    # set the button which has been initiated
+                                Player4.initiatestart(3)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player4.currentposition[2] = 0
+
+                            else:
+                                p_turn = 1                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player4.finalstatus[2] != 1:
+
+                            if Player4.currentposition[2] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 6
+                                p_turn = 1
+
+                            elif Player4.currentposition[2] < 50:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[2])
+                                    Player4.currentposition[2] += 6
+                                p_turn = 1
+
+                            else:
+                                p_turn = 1
+                                mouse_clicked = False
+
+            elif mouse_clicked == True and mouse_x >= 985 and mouse_x <= 1035 and mouse_y >= 600 and mouse_y <= 650:
+                move_button = 4
+                mouse_clicked = False
+
+                if move_button == 4:
+                    diff = (56 - Player4.currentposition[3])
+
+                    if Player4.initialstatus[3] == 0:
+                            if n == 6:
+                                Player4.initialstatus[3] = 1    # change the status of button 1 for player 1
+                                initiated4[0] = position_yellow[0]    # set the button which has been initiated
+                                Player4.initiatestart(4)        # Function call to initiate the start of button1
+                                mouse_clicked = False            # Change the status of the event
+                                Player4.currentposition[3] = 0
+
+                            else:
+                                p_turn = 1                        # change the player-id if number is not 6
+                                mouse_clicked = False
+
+                    else:
+                        if Player4.finalstatus[3] != 1:
+
+                            if Player4.currentposition[3] >= 50 and n <= diff:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[3])
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 6
+                                p_turn = 1
+
+                            elif Player4.currentposition[3] < 50:
+                                if n == 1:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 1
+                                elif n == 2:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 2
+                                elif n == 3:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 3
+                                elif n == 4:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 4
+                                elif n == 5:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 5
+                                elif n == 6:
+                                    Player4.move(Player4.currentposition[3])
+                                    Player4.currentposition[3] += 6
+                                p_turn = 1
+
+                            else:
+                                p_turn = 1
+                                mouse_clicked = False
 
         Player1.isinhome()
         Player2.isinhome()
